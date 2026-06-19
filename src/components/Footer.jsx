@@ -1,6 +1,7 @@
 import Link from 'next/link';
-import { Zap, Mail, MapPin, Phone, Play, Apple, Star, Instagram, Twitter, Facebook, Youtube } from 'lucide-react';
+import { Zap, Mail, MapPin, Phone, Play, Star, Instagram, Twitter, Facebook, Youtube } from 'lucide-react';
 import { apiGetSafe } from '@/lib/api';
+import AppleLogo from '@/components/AppleLogo';
 
 // All legal pages exposed in the footer (slug must match backend legal types).
 const LEGAL_LINKS = [
@@ -69,7 +70,7 @@ export default async function Footer({ config }) {
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 bg-white/10 hover:bg-white/15 rounded-lg px-4 py-2.5 transition-colors border border-white/10"
                 >
-                  <Apple size={18} className="text-white" />
+                  <AppleLogo size={18} className="text-white" />
                   <div>
                     <p className="text-[9px] text-gray-400 leading-none">Download on the</p>
                     <p className="text-sm font-semibold text-white leading-tight">App Store</p>
@@ -137,6 +138,7 @@ export default async function Footer({ config }) {
                   </Link>
                 </li>
               ))}
+              <li><Link href="/delete-account" className="hover:text-white transition-colors">Delete Account</Link></li>
               <li><Link href="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
             </ul>
           </div>

@@ -2,11 +2,12 @@ import Link from 'next/link';
 import {
   ArrowRight, Zap, ShoppingBag, Footprints, Trophy, Heart, Shield,
   Download, Smartphone, TrendingUp, Flame, Droplets, Target,
-  ChevronRight, Play, Apple, Dumbbell,
+  ChevronRight, Play, Dumbbell,
 } from 'lucide-react';
 import { apiGetSafe, SITE_URL } from '@/lib/api';
 import { getAppConfig } from '@/lib/config';
 import ProductCard from '@/components/ProductCard';
+import AppleLogo from '@/components/AppleLogo';
 
 export const revalidate = 120;
 
@@ -213,7 +214,7 @@ export default async function HomePage() {
                   </div>
                 </a>
                 <a href={appStore} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 bg-white rounded-xl px-6 py-3.5 hover:bg-gray-50 transition-colors">
-                  <Apple size={24} className="text-gray-900" />
+                  <AppleLogo size={24} className="text-gray-900" />
                   <div>
                     <p className="text-[10px] text-gray-500 leading-none">Download on the</p>
                     <p className="text-base font-bold text-gray-900 leading-tight">App Store</p>

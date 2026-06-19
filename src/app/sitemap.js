@@ -16,6 +16,7 @@ export default async function sitemap() {
     { url: `${SITE_URL}/shop`, changeFrequency: 'daily', priority: 0.9 },
     { url: `${SITE_URL}/blogs`, changeFrequency: 'daily', priority: 0.8 },
     { url: `${SITE_URL}/contact`, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${SITE_URL}/delete-account`, changeFrequency: 'yearly', priority: 0.4 },
   ].map((r) => ({ ...r, lastModified: now }));
 
   // Legal pages
