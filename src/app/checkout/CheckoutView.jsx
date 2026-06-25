@@ -55,7 +55,7 @@ export default function CheckoutView({ razorpayEnabled }) {
   };
 
   const handleCoinPurchase = async () => {
-    const items = cart.map((i) => ({ productId: i.productId, quantity: i.quantity }));
+    const items = cart.map((i) => ({ productId: i.productId, quantity: i.quantity, variantId: i.variantId || undefined }));
     await apiPost('/shop/cart/buy-with-coins', { items, shippingAddress: address }, token);
     clearCart();
     setSuccess(true);
@@ -67,7 +67,7 @@ export default function CheckoutView({ razorpayEnabled }) {
       toast.error('Payment gateway is still loading. Please try again.');
       return;
     }
-    const items = cart.map((i) => ({ productId: i.productId, quantity: i.quantity }));
+    const items = cart.map((i) => ({ productId: i.productId, quantity: i.quantity, variantId: i.variantId || undefined }));
     const order = await apiPost(
       '/payment/create-order',
       { items, shippingAddress: address, contactEmail: user?.email },
@@ -218,8 +218,10 @@ export default function CheckoutView({ razorpayEnabled }) {
             <h2 className="text-lg font-bold text-gray-900 mb-4">Order Summary</h2>
             <div className="space-y-3 mb-6">
               {cart.map((item) => (
-                <div key={item.productId} className="flex justify-between text-sm">
-                  <span className="text-gray-600 truncate flex-1">{item.name} × {item.quantity}</span>
+                <div key={item.lineId || item.productId} className="flex justify-between text-sm">
+                  <span className="text-gray-600 truncate flex-1">
+                    {item.name}{item.variantLabel ? ` (${item.variantLabel})` : ''} × {item.quantity}
+                  </span>
                   <span className="font-medium ml-2">₹{item.price * item.quantity}</span>
                 </div>
               ))}

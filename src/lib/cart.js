@@ -13,16 +13,24 @@ export function getCart() {
   }
 }
 
-export function addToCart(product, quantity = 1) {
+export function addToCart(product, quantity = 1, variant = null) {
   const cart = getCart();
-  const existing = cart.find((item) => item.productId === product._id);
+  // Cart line is unique per product + variant combination.
+  const lineId = variant?.variantId ? `${product._id}:${variant.variantId}` : product._id;
+  const existing = cart.find((item) => item.lineId === lineId);
+  const price = variant?.priceOverride != null
+    ? variant.priceOverride
+    : (product.discountedPrice ?? product.price);
   if (existing) {
     existing.quantity += quantity;
   } else {
     cart.push({
+      lineId,
       productId: product._id,
+      variantId: variant?.variantId || null,
+      variantLabel: variant ? [variant.size, variant.color].filter(Boolean).join(' / ') : '',
       name: product.name,
-      price: product.discountedPrice ?? product.price,
+      price,
       image: product.images?.[0] || '',
       quantity,
     });
@@ -31,15 +39,15 @@ export function addToCart(product, quantity = 1) {
   window.dispatchEvent(new Event('cart-updated'));
 }
 
-export function removeFromCart(productId) {
-  const cart = getCart().filter((item) => item.productId !== productId);
+export function removeFromCart(lineId) {
+  const cart = getCart().filter((item) => (item.lineId || item.productId) !== lineId);
   localStorage.setItem(CART_KEY, JSON.stringify(cart));
   window.dispatchEvent(new Event('cart-updated'));
 }
 
-export function updateQuantity(productId, quantity) {
+export function updateQuantity(lineId, quantity) {
   const cart = getCart();
-  const item = cart.find((i) => i.productId === productId);
+  const item = cart.find((i) => (i.lineId || i.productId) === lineId);
   if (item) item.quantity = Math.max(1, quantity);
   localStorage.setItem(CART_KEY, JSON.stringify(cart));
   window.dispatchEvent(new Event('cart-updated'));

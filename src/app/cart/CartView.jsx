@@ -40,7 +40,7 @@ export default function CartView() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-4">
             {cart.map((item) => (
-              <div key={item.productId} className="flex gap-4 bg-white border border-gray-100 rounded-2xl p-4">
+              <div key={item.lineId || item.productId} className="flex gap-4 bg-white border border-gray-100 rounded-2xl p-4">
                 <div className="w-24 h-24 bg-gray-50 rounded-xl overflow-hidden shrink-0">
                   {item.image ? (
                     // eslint-disable-next-line @next/next/no-img-element
@@ -51,14 +51,15 @@ export default function CartView() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <h2 className="font-semibold text-gray-900 truncate">{item.name}</h2>
+                  {item.variantLabel && <p className="text-xs text-brand-600 font-medium mt-0.5">{item.variantLabel}</p>}
                   <p className="text-sm text-gray-500 mt-0.5">₹{item.price} / 🪙 {item.price * 10} coins</p>
                   <div className="flex items-center gap-3 mt-3">
                     <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
-                      <button onClick={() => updateQuantity(item.productId, item.quantity - 1)} className="p-2 hover:bg-gray-50"><Minus size={14} /></button>
+                      <button onClick={() => updateQuantity(item.lineId || item.productId, item.quantity - 1)} className="p-2 hover:bg-gray-50"><Minus size={14} /></button>
                       <span className="w-8 text-center text-sm font-medium">{item.quantity}</span>
-                      <button onClick={() => updateQuantity(item.productId, item.quantity + 1)} className="p-2 hover:bg-gray-50"><Plus size={14} /></button>
+                      <button onClick={() => updateQuantity(item.lineId || item.productId, item.quantity + 1)} className="p-2 hover:bg-gray-50"><Plus size={14} /></button>
                     </div>
-                    <button onClick={() => removeFromCart(item.productId)} className="p-2 text-red-500 hover:bg-red-50 rounded-lg" aria-label="Remove">
+                    <button onClick={() => removeFromCart(item.lineId || item.productId)} className="p-2 text-red-500 hover:bg-red-50 rounded-lg" aria-label="Remove">
                       <Trash2 size={16} />
                     </button>
                     <span className="ml-auto font-bold text-gray-900">₹{item.price * item.quantity}</span>
