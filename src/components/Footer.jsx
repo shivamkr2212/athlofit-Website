@@ -86,9 +86,14 @@ export default async function Footer({ config }) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9 bg-brand-600 rounded-xl flex items-center justify-center">
-                <Zap size={18} className="text-white" />
-              </div>
+              {config?.website?.logoUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={config.website.logoUrl} alt={siteName} className="h-9 w-auto brightness-0 invert" />
+              ) : (
+                <div className="w-9 h-9 bg-brand-600 rounded-xl flex items-center justify-center">
+                  <Zap size={18} className="text-white" />
+                </div>
+              )}
               <span className="text-xl font-bold text-white">{siteName}</span>
             </div>
             <p className="text-sm text-gray-400 leading-relaxed mb-4">

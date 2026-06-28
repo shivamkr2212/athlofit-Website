@@ -54,9 +54,14 @@ export default function Navbar({ config }) {
     <header className="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-100">
       <div className="container-w flex items-center justify-between h-16">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-9 h-9 bg-brand-600 rounded-xl flex items-center justify-center">
-            <Zap size={18} className="text-white" />
-          </div>
+          {config?.website?.logoUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={config.website.logoUrl} alt={config?.website?.siteName || 'Athlofit'} className="h-9 w-auto" />
+          ) : (
+            <div className="w-9 h-9 bg-brand-600 rounded-xl flex items-center justify-center">
+              <Zap size={18} className="text-white" />
+            </div>
+          )}
           <span className="text-xl font-bold text-gray-900 tracking-tight">
             {config?.website?.siteName || 'Athlofit'}
           </span>

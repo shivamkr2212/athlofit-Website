@@ -18,6 +18,7 @@ const DEFAULT_CONFIG = {
     defaultMetaDescription:
       'Track your fitness, earn coins by walking, and shop premium health products.',
     ogImage: '',
+    logoUrl: '',
     razorpayEnabled: false,
   },
 };
